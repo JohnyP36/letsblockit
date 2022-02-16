@@ -18,6 +18,7 @@ const (
 	actionRender = filterAction(iota)
 	actionSave
 	actionDelete
+	actionSort
 )
 
 func (s *Server) listFilters(c echo.Context) error {
@@ -158,6 +159,14 @@ func (s *Server) viewFilter(c echo.Context) error {
 		if len(newParams) > 0 {
 			hc.Add("new_params", newParams)
 		}
+
+		// Handle sorting parameter values
+		if action == actionSort {
+			sortedParamName := c.FormValue("__sort")
+			if err := filter.SortValues(sortedParamName, params); err != nil {
+				return err
+			}
+		}
 	}
 
 	// Render the filter template
@@ -262,6 +271,8 @@ func parseFilterParams(c echo.Context, filter *filters.Filter) (map[string]inter
 		action = actionSave
 	} else if _, ok := formParams["__disable"]; ok {
 		action = actionDelete
+	} else if _, ok := formParams["__sort"]; ok {
+		action = actionSort
 	}
 
 	params := make(map[string]interface{})
