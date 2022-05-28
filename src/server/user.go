@@ -35,7 +35,6 @@ func (s *Server) isUserBanned(id uuid.UUID) bool {
 
 func (s *Server) userAccount(c echo.Context) error {
 	hc := s.buildPageContext(c, "My account")
-	hc.NoBoost = true
 	if hc.UserLoggedIn {
 		if err := s.store.RunTx(c, func(ctx context.Context, q db.Querier) error {
 			info, err := q.GetListForUser(ctx, hc.UserID)
@@ -94,5 +93,5 @@ func (s *Server) rotateListToken(c echo.Context) error {
 		return err
 	}
 
-	return s.redirect(c, http.StatusSeeOther, s.echo.Reverse("user-account"))
+	return c.Redirect(http.StatusSeeOther, s.echo.Reverse("user-account"))
 }

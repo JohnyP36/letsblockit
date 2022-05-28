@@ -21,7 +21,6 @@ type Context struct {
 	NakedContent bool
 	Page         *page
 	Sidebar      *page
-	NoBoost      bool
 	HotReload    bool
 	MainDomain   bool
 	RequestInfo  RequestInfo

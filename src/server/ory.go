@@ -176,7 +176,6 @@ func (s *Server) renderKratosForm(c echo.Context) error {
 		}
 
 		hc := s.buildPageContext(c, formSettings.Title)
-		hc.NoBoost = true
 		hc.Add("type", formType)
 		hc.Add("ui", ui)
 		hc.Add("settings", formSettings)
@@ -204,7 +203,7 @@ func (s *Server) startKratosFlow(c echo.Context) error {
 		if err != nil {
 			return nil
 		}
-		return s.redirect(c, http.StatusSeeOther, target)
+		return c.Redirect(http.StatusSeeOther, target)
 	case "loginOrRegistration":
 		allowReturnTo = true
 		if _, err := c.Cookie(hasAccountCookieName); err == nil {
@@ -222,7 +221,7 @@ func (s *Server) startKratosFlow(c echo.Context) error {
 			redirect += fmt.Sprintf(oryReturnToPattern, returnTo)
 		}
 	}
-	return s.redirect(c, http.StatusSeeOther, redirect)
+	return c.Redirect(http.StatusSeeOther, redirect)
 }
 
 func (s *Server) queryKratos(c echo.Context, typeTag, endpoint string, body interface{}) error {

@@ -239,15 +239,7 @@ func (s *Server) absoluteReverse(c echo.Context, name string, params ...interfac
 // redirectToPage the user to another page, either via htmx client-side redirect (form submissions)
 // or http 302 redirect (direct access, js disabled)
 func (s *Server) redirectToPage(c echo.Context, name string, params ...interface{}) error {
-	return s.redirect(c, http.StatusFound, s.echo.Reverse(name, params...))
-}
-
-func (s *Server) redirect(c echo.Context, code int, target string) error {
-	if c.Request().Header.Get("HX-Request") == "true" {
-		c.Response().Header().Set("HX-Redirect", target)
-		return c.NoContent(200)
-	}
-	return c.Redirect(code, target)
+	return c.Redirect(http.StatusFound, s.echo.Reverse(name, params...))
 }
 
 func (s *Server) buildPageContext(c echo.Context, title string) *pages.Context {
