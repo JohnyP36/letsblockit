@@ -147,17 +147,17 @@ func (mr *MockFilterRepositoryMockRecorder) GetTags() *gomock.Call {
 }
 
 // Render mocks base method.
-func (m *MockFilterRepository) Render(w io.Writer, name string, data map[string]interface{}) error {
+func (m *MockFilterRepository) Render(w io.Writer, instance *filters.Instance) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Render", w, name, data)
+	ret := m.ctrl.Call(m, "Render", w, instance)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Render indicates an expected call of Render.
-func (mr *MockFilterRepositoryMockRecorder) Render(w, name, data interface{}) *gomock.Call {
+func (mr *MockFilterRepositoryMockRecorder) Render(w, instance interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Render", reflect.TypeOf((*MockFilterRepository)(nil).Render), w, name, data)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Render", reflect.TypeOf((*MockFilterRepository)(nil).Render), w, instance)
 }
 
 // MockReleaseClient is a mock of ReleaseClient interface.

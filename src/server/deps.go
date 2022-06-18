@@ -21,7 +21,7 @@ type FilterRepository interface {
 	GetFilter(name string) (*filters.Filter, error)
 	GetFilters() []*filters.Filter
 	GetTags() []string
-	Render(w io.Writer, name string, data map[string]interface{}) error
+	Render(w io.Writer, instance *filters.Instance) error
 }
 
 type ReleaseClient interface {
